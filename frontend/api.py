@@ -1,6 +1,6 @@
 import requests
 import uuid
-BASE_URL = "https://chat-assistant-nhch.onrender.com"
+BASE_URL = "https://trainingchat-assistant.onrender.com"
 
 
 # -------------------------
