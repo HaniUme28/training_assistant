@@ -16,8 +16,10 @@ def login(email, password):
         }
     )
 
-    return response.json()
+    print("Status Code:", response.status_code)
+    print("Response Text:", response.text)
 
+    return response.json()
 
 # -------------------------
 # Signup

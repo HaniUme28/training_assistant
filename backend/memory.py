@@ -1,8 +1,4 @@
-from database import db
-
-message_collection = db["messages"]
-
-
+from database import message_collection
 # ----------------------------------
 # Save One Message
 # ----------------------------------

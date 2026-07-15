@@ -1,4 +1,4 @@
-from database import db
+from database import users_collection
 from passlib.context import CryptContext
 
 # Password hashing
@@ -7,8 +7,10 @@ pwd_context = CryptContext(
     deprecated="auto"
 )
 
-users_collection = db["users"]
 
+# -----------------------------------
+# Create User
+# -----------------------------------
 
 def create_user(name, email, password):
 
@@ -26,7 +28,7 @@ def create_user(name, email, password):
 
     hashed_password = pwd_context.hash(password)
 
-    users_collection.insert_one({
+    result = users_collection.insert_one({
         "name": name,
         "email": email,
         "password": hashed_password
@@ -36,9 +38,16 @@ def create_user(name, email, password):
 
     return {
         "success": True,
-        "message": "Account created successfully."
+        "message": "Account created successfully.",
+        "user_id": str(result.inserted_id),
+        "name": name,
+        "email": email
     }
 
+
+# -----------------------------------
+# Login User
+# -----------------------------------
 
 def login_user(email, password):
 

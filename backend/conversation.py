@@ -1,8 +1,5 @@
-from database import db
+from database import conversation_collection, message_collection
 from datetime import datetime
-
-conversation_collection = db["conversations"]
-message_collection = db["messages"]
 
 
 # ---------------------------------
@@ -23,15 +20,10 @@ def create_conversation(chat_id, user_id, first_message):
         title = title[:35] + "..."
 
     conversation_collection.insert_one({
-
         "conversation_id": chat_id,
-
         "user_id": user_id,
-
         "title": title,
-
         "created_at": datetime.now()
-
     })
 
 
@@ -41,19 +33,10 @@ def create_conversation(chat_id, user_id, first_message):
 def get_conversations(user_id):
 
     return list(
-
         conversation_collection.find(
-
-            {
-                "user_id": user_id
-            },
-
-            {
-                "_id": 0
-            }
-
+            {"user_id": user_id},
+            {"_id": 0}
         ).sort("created_at", -1)
-
     )
 
 
@@ -63,23 +46,16 @@ def get_conversations(user_id):
 def delete_conversation(chat_id):
 
     conversation_collection.delete_one({
-
         "conversation_id": chat_id
-
     })
 
     message_collection.delete_many({
-
         "chat_id": chat_id
-
     })
 
     return {
-
         "success": True,
-
         "message": "Conversation deleted."
-
     }
 
 
@@ -89,27 +65,16 @@ def delete_conversation(chat_id):
 def rename_conversation(chat_id, title):
 
     conversation_collection.update_one(
-
         {
-
             "conversation_id": chat_id
-
         },
-
         {
-
             "$set": {
-
                 "title": title
-
             }
-
         }
-
     )
 
     return {
-
         "success": True
-
     }
