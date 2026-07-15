@@ -4,3 +4,6 @@ pymongo
 python-dotenv
 passlib
 bcrypt
+langchain
+langchain-community
+pypdf
