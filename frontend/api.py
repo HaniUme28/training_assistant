@@ -1,15 +1,16 @@
 import requests
 import uuid
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "https://chat-assistant-nhch.onrender.com"
 
 
 # -------------------------
 # Login
 # -------------------------
 def login(email, password):
+    url = f"{BASE_URL}/login"
 
     response = requests.post(
-        f"{BASE_URL}/login",
+        url,
         json={
             "email": email,
             "password": password
@@ -19,7 +20,13 @@ def login(email, password):
     print("Status Code:", response.status_code)
     print("Response Text:", response.text)
 
-    return response.json()
+    try:
+        return response.json()
+    except Exception:
+        return {
+            "success": False,
+            "message": response.text
+        }
 
 # -------------------------
 # Signup
@@ -134,3 +141,29 @@ def rename_conversation(chat_id, title):
     )
 
     return response.json()
+
+
+
+
+
+def login(email, password):
+    url = f"{BASE_URL}/login"
+
+    response = requests.post(
+        url,
+        json={
+            "email": email,
+            "password": password
+        }
+    )
+
+    print("Status Code:", response.status_code)
+    print("Response Text:", response.text)
+
+    try:
+        return response.json()
+    except Exception:
+        return {
+            "success": False,
+            "message": response.text
+        }
